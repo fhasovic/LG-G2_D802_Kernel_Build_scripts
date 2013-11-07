@@ -37,6 +37,9 @@ rm -f output/*.img
 mkdir -p output/system/lib/modules
 mkdir -p output/boot
 
+#force regeneration of .dtb files for every compile
+rm -f kernel/arch/arm/boot/*.dtb
+rm -f kernel/arch/arm/boot/*.cmd
 
 # move into the kernel directory and compile the main image
 echo "Compiling Kernel............."
