@@ -84,16 +84,16 @@ loglevel 3
     write /proc/sys/kernel/panic_on_oops 1
     write /proc/sys/kernel/hung_task_timeout_secs 0
     write /proc/cpu/alignment 4
-    write /proc/sys/kernel/sched_latency_ns 1000000
-    write /proc/sys/kernel/sched_wakeup_granularity_ns 200000
+    write /proc/sys/kernel/sched_latency_ns 10000000
+    write /proc/sys/kernel/sched_wakeup_granularity_ns 2000000
     write /proc/sys/kernel/sched_compat_yield 1
     write /proc/sys/kernel/sched_child_runs_first 0
     write /proc/sys/kernel/randomize_va_space 2
     write /proc/sys/kernel/kptr_restrict 2
     write /proc/sys/kernel/dmesg_restrict 1
     write /proc/sys/vm/mmap_min_addr 32768
-    write /proc/sys/kernel/sched_rt_runtime_us 95000
-    write /proc/sys/kernel/sched_rt_period_us 100000
+    write /proc/sys/kernel/sched_rt_runtime_us 950000
+    write /proc/sys/kernel/sched_rt_period_us 1000000
 
 # Create cgroup mount points for process groups
     mkdir /dev/cpuctl
@@ -102,23 +102,23 @@ loglevel 3
     chown system system /dev/cpuctl/tasks
     chmod 0660 /dev/cpuctl/tasks
     write /dev/cpuctl/cpu.shares 1024
-    write /dev/cpuctl/cpu.rt_runtime_us 95000
-    write /dev/cpuctl/cpu.rt_period_us 100000
+    write /dev/cpuctl/cpu.rt_runtime_us 950000
+    write /dev/cpuctl/cpu.rt_period_us 1000000
 
     mkdir /dev/cpuctl/apps
     chown system system /dev/cpuctl/apps/tasks
     chmod 0666 /dev/cpuctl/apps/tasks
     write /dev/cpuctl/apps/cpu.shares 1024
-    write /dev/cpuctl/apps/cpu.rt_runtime_us 80000
-    write /dev/cpuctl/apps/cpu.rt_period_us 100000
+    write /dev/cpuctl/apps/cpu.rt_runtime_us 800000
+    write /dev/cpuctl/apps/cpu.rt_period_us 1000000
 
     mkdir /dev/cpuctl/apps/bg_non_interactive
     chown system system /dev/cpuctl/apps/bg_non_interactive/tasks
     chmod 0666 /dev/cpuctl/apps/bg_non_interactive/tasks
     # 5.0 %
     write /dev/cpuctl/apps/bg_non_interactive/cpu.shares 52
-    write /dev/cpuctl/apps/bg_non_interactive/cpu.rt_runtime_us 70000
-    write /dev/cpuctl/apps/bg_non_interactive/cpu.rt_period_us 100000
+    write /dev/cpuctl/apps/bg_non_interactive/cpu.rt_runtime_us 700000
+    write /dev/cpuctl/apps/bg_non_interactive/cpu.rt_period_us 1000000
 
 # Allow everybody to read the xt_qtaguid resource tracking misc dev.
 # This is needed by any process that uses socket tagging.
@@ -262,8 +262,8 @@ on boot
     chmod 0664 /sys/module/lowmemorykiller/parameters/minfree
 
     # Tweak background writeout
-    write /proc/sys/vm/dirty_expire_centisecs 800
-    write /proc/sys/vm/dirty_background_ratio  70
+    write /proc/sys/vm/dirty_expire_centisecs 200
+    write /proc/sys/vm/dirty_background_ratio  5
 
     # Permissions for System Server and daemons.
     chown radio system /sys/android_power/state

@@ -4,13 +4,13 @@
 on boot
 ## 2013-08-09 sungwoo79.park@lge.com LGP_DATA_TCPIP_TCP_BUFSIZE_NATIVE [START]
 # ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax
-    setprop net.tcp.buffersize.default 4096,87380,524288,4096,16384,110208
+    setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
     setprop net.tcp.buffersize.edge    4093,26280,704512,4096,16384,110208
     setprop net.tcp.buffersize.gprs    4092,8760,704512,4096,8760,110208
-    setprop net.tcp.buffersize.umts    4094,87380,704512,4096,16384,110208
-    setprop net.tcp.buffersize.hsdpa   4092,87380,704512,4096,16384,110208
-    setprop net.tcp.buffersize.hsupa   4092,87380,704512,4096,16384,110208
-    setprop net.tcp.buffersize.hspa    4092,87380,704512,4096,16384,110208
+    setprop net.tcp.buffersize.umts    4094,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.hsdpa   4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.hsupa   4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.hspa    4094,87380,1220608,4096,16384,1220608
     setprop net.tcp.buffersize.lte     524288,1048576,2097152,262144,524288,1048576
     setprop net.tcp.buffersize.wifi    524288,1048576,2097152,262144,524288,1048576
 ## 2013-08-09 sungwoo79.park@lge.com LGP_DATA_TCPIP_TCP_BUFSIZE_NATIVE [END]
@@ -22,6 +22,12 @@ on boot
     setprop bluetooth.pan true
     setprop persist.service.bt.support.sap true
     setprop service.bt.support.busytone true
+
+#2013-07-12 hwayoung.lim@lge.com LGP_DATA_TCPIP_NSRM [START]
+    mkdir /data/connectivity 0775 system system
+    mkdir /data/connectivity/nsrm 0775 system system
+#2013-07-12 hwayoung.lim@lge.com LGP_DATA_TCPIP_NSRM [END]
+
 
 # Assign TCP buffer thresholds to be ceiling value of technology maximums
 # Increased technology maximums should be reflected here.

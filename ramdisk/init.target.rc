@@ -28,7 +28,6 @@
 #
 
 on early-init
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 2265600
     mkdir /firmware 0771 system system
     symlink /data/tombstones /tombstones
 
@@ -204,7 +203,7 @@ service qosmgrd /system/bin/qosmgr /system/etc/qosmgr_rules.xml
 service thermal-engine /system/bin/thermal-engine --time=20
    class main
    user root
-   disabled
+   group root
 
 service security-check1 /sbin/security_boot_check system
     class core
@@ -213,6 +212,11 @@ service security-check1 /sbin/security_boot_check system
 service security-check2 /sbin/security_boot_check recovery
     class core
     oneshot
+
+
+on property:sys.boot_completed=1
+   start thermal-engine
+# LGE_CHANGE_E, [G2_power][youngmin.kwon@lge.com], 20130319, thermal-engine start when boot is completed.
 
 service time_daemon /system/bin/time_daemon
    class late_start
