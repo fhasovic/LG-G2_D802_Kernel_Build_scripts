@@ -3,7 +3,7 @@ clear
 
 
 # What you need installed to compile
-# gcc, gpp, cpp, c++, g++, lzma, lzop, xterm
+# gcc, gpp, cpp, c++, g++, lzma, lzop, xterm, ia32-libs
 
 # What you need to make configuration easier by using xconfig
 # qt4-dev, qmake-qt4, pkg-config
@@ -37,39 +37,36 @@ rm -f output/*.img
 mkdir -p output/system/lib/modules
 mkdir -p output/boot
 
-#force regeneration of .dtb files for every compile
+#force regeneration of .dtb and zImage files for every compile
 rm -f kernel/arch/arm/boot/*.dtb
 rm -f kernel/arch/arm/boot/*.cmd
+rm -f kernel/arch/arm/boot/zImage
+rm -f kernel/arch/arm/boot/Image
 
 # move into the kernel directory and compile the main image
 echo "Compiling Kernel............."
 cd kernel
 xterm -e make -j4
 
-
 # compile the modules, and depmod to create the final zImage
 echo "Compiling Modules............"
 xterm -e make INSTALL_MOD_PATH=.. modules_install
-
 
 # move the compiled zImage and modules into the output working directory
 echo "Move compiled objects........"
 cp arch/arm/boot/zImage ../output/boot						2>/dev/null
 find -name '*.ko' -exec cp -av {} ../output/system/lib/modules/ \; 		>/dev/null
 
-
 # create the ramdisk and move it to the output working directory
 echo "Create ramdisk..............."
 ./scripts/mkbootfs ../ramdisk | gzip > ramdisk.gz				2>/dev/null
 mv ramdisk.gz ../output/boot							2>/dev/null
-
 
 # create the dt.img from the compiled device files, necessary for msm8974 boot images
 echo "Create dt.img................"
 echo
 ./scripts/dtbTool -v -s 2048 -o ../output/boot/dt.img arch/arm/boot/
 echo
-
 
 # build the final boot.img ready for inclusion in flashable zip
 echo "Build boot.img..............."
@@ -82,7 +79,6 @@ cmd_line="console=ttyHSL0,115200,n8 androidboot.hardware=g2 user_debug=31 msm_rt
 ./mkbootimg --kernel zImage --ramdisk ramdisk.gz --cmdline "$cmd_line" --base $base --offset $offset --tags-addr $tags_addr --pagesize 2048 --dt dt.img -o newboot.img
 mv newboot.img ../boot.img
 
-
 # cleanup all temporary working files
 echo "Post build cleanup..........."
 cd ..
@@ -90,11 +86,10 @@ rm -rf boot
 cd ..
 rm -rf lib
 
-
 # create the flashable zip file from the contents of the output directory
 echo "Make flashable zip..........."
 cd output
-zip -r LG_G2_D802_StockMOD_Kernel.zip * >/dev/null
+zip -r LG_G2_D802_StockMOD_Kernel.zip * 					>/dev/null
 
 
 
