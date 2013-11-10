@@ -74,12 +74,12 @@ service digicl /system/bin/digicl.sh
     oneshot
 
 #CAPP_DEBUG_TOOLS
-#service quickdump /system/bin/quickdump.sh
-#    class main
-#    disabled
-#    oneshot
-#    ioprio rt 0
-#    keycodes 114 115 116
+service quickdump /system/bin/quickdump.sh
+    class main
+    disabled
+    oneshot
+    ioprio rt 0
+    keycodes 114 115 116
 
 #Application Manager NTCODE_INSTALL
 service ntcode_install  /system/vendor/bin/ntcode_install.sh
