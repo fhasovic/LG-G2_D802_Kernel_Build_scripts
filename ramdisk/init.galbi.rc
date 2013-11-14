@@ -28,7 +28,7 @@
 #import init.galbi.usb.rc
 import init.lge.usb.rc
 import init.target.rc
-import init.lge.log.rc
+#import init.lge.log.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -964,19 +964,19 @@ on property:persist.service.fakebatt=1
 on property:persist.service.fakebatt=0
     write /sys/class/power_supply/battery/pseudo_batt "0 1 100 40 4100 80 1"
 
-service service-crash /system/bin/sh /init.galbi.crash.sh
-    class main
-    disabled
-    oneshot
+#service service-crash /system/bin/sh /init.galbi.crash.sh
+#    class main
+#    disabled
+#    oneshot
 
 # yongmin.jung@lge.com 2013.02.07 enable & disable crash handler, rtb & trace event through property
-on property:persist.service.crash.enable=1
-    stop service-crash
-    start service-crash
+#on property:persist.service.crash.enable=1
+#    stop service-crash
+#    start service-crash
 
-on property:persist.service.crash.enable=0
-    stop service-crash
-    start service-crash
+#on property:persist.service.crash.enable=0
+#    stop service-crash
+#    start service-crash
 
 #2013-03-06 seongmook.yim(seongmook.yim@lge.com) [P6/MDMBSP] ADD LGODL [START]
 service lg_dm_dev_router /system/bin/lg_dm_dev_router
@@ -1010,12 +1010,12 @@ service moca_restart /system/bin/moca_restart
     disabled
     oneshot
 
-service moca_ssr_ramdump /system/bin/subsystem_ramdump 1
-    class late_start
-    user system
-    group system sdcard_r sdcard_rw radio
-    disabled
-    oneshot
+#service moca_ssr_ramdump /system/bin/subsystem_ramdump 1
+#    class late_start
+#    user system
+#    group system sdcard_r sdcard_rw radio
+#    disabled
+#    oneshot
     
 
 on property:persist.service.moca.enable=1
